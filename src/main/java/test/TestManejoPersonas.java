@@ -1,33 +1,36 @@
 package test;
 
 import datos.Conexion;
-import datos.PersonaJDBC;
-import domain.Persona;
+import datos.PersonaDao;
+import datos.PersonaDaoJDBC;
+import domain.PersonaDTO;
 import java.sql.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TestManejoPersonas {
     
     public static void main(String[] args) {
-//        PersonaJDBC personaDao = new PersonaJDBC();
+//        PersonaDaoJDBC personaDao = new PersonaDaoJDBC();
         Connection conexion = null;
         try {
             conexion = Conexion.getConnection();
             if (conexion.getAutoCommit()) {
                 conexion.setAutoCommit(false);
             }
-            PersonaJDBC personaJdbc = new PersonaJDBC(conexion);
-            Persona personaModificar = new Persona();
-            personaModificar.setIdPersona(4);
-            personaModificar.setNombre("Juan kkk");
-            personaModificar.setApellido("Ezparza");
-            personaModificar.setEmail("loki@mail.com");
-            personaModificar.setTelefono("92841945");
-            personaJdbc.actualizar(personaModificar);
+            PersonaDao personaDao = new PersonaDaoJDBC(conexion);
+            List<PersonaDTO> personas = personaDao.seleccionar();
+            for (PersonaDTO persona : personas) {
+                System.out.println("Persona DTO: " + persona);
+            }
+//            PersonaDTO personaModificar = new PersonaDTO();
+//            personaModificar.setIdPersona(4);
+//            personaModificar.setNombre("Juan kkk");
+//            personaModificar.setApellido("Ezparza");
+//            personaModificar.setEmail("loki@mail.com");
+//            personaModificar.setTelefono("92841945");
+//            personaJdbc.actualizar(personaModificar);
             
-//            Persona nuevaPersona = new Persona();
+//            PersonaDTO nuevaPersona = new PersonaDTO();
 //            nuevaPersona.setNombre("Gama");
 ////            nuevaPersona.setApellido("Garcia11111111111111111111111111111111111111111111111111111111111111111111111111111111");
 //            nuevaPersona.setApellido("Garcia");
@@ -45,17 +48,17 @@ public class TestManejoPersonas {
             }
         }
 
-//        Insertando un nuevo objeto de tipo Persona
-//        Persona personaNueva = new Persona("Carlos", "Esparza", "cesparza@mail.com", "554456587");
+//        Insertando un nuevo objeto de tipo PersonaDTO
+//        PersonaDTO personaNueva = new PersonaDTO("Carlos", "Esparza", "cesparza@mail.com", "554456587");
 //        personaDao.insertar(personaNueva);
         //Modificar un objeto de persona existente
-//        Persona personaModificar = new Persona(4, "Juan Carlos", "Esparza", "jcesparza@mail.com", "554456587");
+//        PersonaDTO personaModificar = new PersonaDTO(4, "Juan Carlos", "Esparza", "jcesparza@mail.com", "554456587");
 //        personaDao.actualizar(personaModificar);
         //Eliminar un registro
-//        Persona personaEliminar = new Persona(1);
+//        PersonaDTO personaEliminar = new PersonaDTO(1);
 //        personaDao.eliminar(personaEliminar);
 //        
-//        //Listado Persona
+//        //Listado PersonaDTO
 //        List<Persona> personas = personaDao.seleccionar();
 //
 //        personas.forEach(persona -> {
